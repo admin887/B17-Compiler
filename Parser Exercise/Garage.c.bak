@@ -1,0 +1,95 @@
+#include "Garage.h"
+#include "DoublyLinkedList.h"
+
+#define SIZE 250
+
+//char *names[] = {NULL, "ARITHMETIC_OPERATION", "RELATION_OPERATION", "ASSIGNMENT OPERATION", "POINTER", "INDETIFIER", "KEYWORD", "SEPARATE_SIGN", "NUMBER", "END OF FILE"};
+
+extern int yylex();
+
+static int arrayIndex = 0;
+static int flag = 0;
+static int LineNumber=0;
+static token *arrayOfTokens;
+static int NotFirstRun;
+
+char* getTokenName(int type)
+{
+	char* str;
+	switch(type)
+	{
+		case ARITHMETIC_OPERATION:
+		str = "ARITHMETIC OPERATION";
+		break;
+		case RELATION_OPERATION:
+		str = "RELATION OPERATION";
+		break;
+		case KEYWORD:
+		str = "KEYWORD";
+		break;
+		case INDETIFIER:
+		str = "INDETIFIER";
+		break;
+		case SEPARATE_SIGN:
+		str = "SEPARATE SIGN";
+		break;
+		case NUMBER:
+		str = "NUMBER";
+		break;
+		case SPECIAL:
+		str = "SPECIAL";
+		break;
+		case EOF:
+		str="EOF";
+		break;
+		default:
+		str="BAD";
+	}
+	return str;
+}
+
+void create_and_store_token(int typeOfToken, int numberOfLine, char * tokenLexeme)
+{
+		if(numberOfLine!=LineNumber)
+		{
+			if(NotFirstRun==1)
+			{
+				InsertAtTail(arrayOfTokens);
+			}
+			
+			LineNumber++;
+			arrayIndex=0;
+			arrayOfTokens= (token*)malloc(sizeof(token)*SIZE);
+
+			NotFirstRun=1;
+		}
+
+			arrayOfTokens[arrayIndex].tokenType = typeOfToken;
+			arrayOfTokens[arrayIndex].lineNumber = numberOfLine;
+			arrayOfTokens[arrayIndex].lexema = getTokenName(typeOfToken);
+
+		
+}
+
+token Next_Token()
+{
+	if(!flag)
+	{
+		yylex();
+		flag = 0;
+
+		return arrayOfTokens[arrayIndex++];
+	}
+
+	flag = 0;
+	return arrayOfTokens[arrayIndex++];	
+}
+
+token Back_Token()
+{
+	flag = 1;
+	arrayIndex--;
+
+	return arrayOfTokens[arrayIndex];
+}
+

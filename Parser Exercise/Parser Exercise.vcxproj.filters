@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DoublyLinkedList.c" />
+    <ClCompile Include="Garage.c" />
+    <ClCompile Include="lex.yy.c" />
+    <ClCompile Include="Parser.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="Garage.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="Token.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="2_GoodValidation.txt" />
+    <None Include="LEX_BadValidation1.txt" />
+    <None Include="LEX_BadValidation2.txt" />
+    <None Include="LEX_GoodValidation1.txt" />
+    <None Include="LEX_GoodValidation2.txt" />
+    <None Include="test2_bad.txt" />
+    <None Include="test2_good.txt" />
+    <None Include="information.txt">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="LexicalAnalysis.lex">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{37b3ed54-6507-42fa-9c99-2db7be870955}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

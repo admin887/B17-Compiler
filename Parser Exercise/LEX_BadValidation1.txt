@@ -1,0 +1,15 @@
+~//_This_is_Bad_Validation_1_//~
+@{Superman}@
+
+{%^&&()}
+
+B@tman=wonderwoman=5
+
+gogo 7=9
+
+integer a = 'a';
+
+1f a = 5 then b=6;
+
+else!
+b=8

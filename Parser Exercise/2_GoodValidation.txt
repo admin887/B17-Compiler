@@ -1,0 +1,13 @@
+task a17 begin 
+
+real myreal;
+integer myint; 
+
+{
+myint=5;
+myreal = myint+7;
+}
+
+parbegin
+ a17
+ parend

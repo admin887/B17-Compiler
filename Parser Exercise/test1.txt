@@ -1,0 +1,51 @@
+
+task project1 begin
+	real value_1; real value_2;
+	integer i
+	{
+		do
+			value_1 = value_2 + 1;
+			send signal_1.project3(value_2)
+		until (value_1 == 10) od;
+		accept signal_15(integer result)
+	}
+end;
+
+
+task project2 begin
+	integer x1;
+	integer x2;
+	real temp
+	{
+		x1 = 5;
+		do
+			x1 = x1 + 1; x1 = x2 + 2
+		until (x1 < 10) od;
+		send project1.signal_15(x1*2)
+	}
+end;
+
+
+
+task project3 begin
+	integer x1x2;
+	real temp
+	{
+		begin
+			integer value;
+			real integer1
+			{
+				x1x2 = -10;
+				value = x1x2 - 5;
+				integer1 = value / 3.2
+			}
+		end
+	}
+end;
+
+parbegin
+	project2 || project3
+parend
+
+
+end; proj4 task x2x1 integer until a.signal  temp real { = a ) -5 =/ end || end; begin 

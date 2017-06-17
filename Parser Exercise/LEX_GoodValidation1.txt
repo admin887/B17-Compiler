@@ -1,0 +1,18 @@
+this
+file
+include
+only 
+good 
+data
+
+the lexical analyser able to read + , * , - and /
+keywords too == do,od,until,start,end,send,accept
+
+the lexical analyser works perfect!=
+
+start smiling==
+
+it will work on <,>,!=,== too, wow!=
+
+<we> >=are<= soo proud,,,,,,,,
+

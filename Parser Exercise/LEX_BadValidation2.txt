@@ -1,0 +1,9 @@
+start
+Dim x As integer, y as integer
+x=1
+y=x*x
+loop until y<=100
+x=x+1
+y=x*x
+end_loop
+end
