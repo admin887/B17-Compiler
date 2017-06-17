@@ -5,7 +5,7 @@ extern int yylineno;
 #define PARSE_LENGH 5
 
 typedef struct _node
-{
+{ 
 	char * FunctionString;
 	struct _node * Next;
 	struct _node * Prev;
