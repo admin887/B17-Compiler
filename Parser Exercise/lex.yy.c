@@ -1922,10 +1922,9 @@ int yywrap(void){return 1;}
 
 void main(int argc, char* argv[])
 {	
-
 	int a;
 	token currentToken;
-	freopen("C:\\temp\\test1_303973465_syntactic.txt", "w", stdout);
+//	freopen("C:\\temp\\test1_303973465_syntactic.txt", "w", stdout);
 	printf("\t\tAnalyzing input text for defined tokens: \n\n");
 
 	printf("Press any key to load first file");

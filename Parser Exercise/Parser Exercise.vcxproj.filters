@@ -11,6 +11,7 @@
     <ClInclude Include="Garage.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Token.h" />
+    <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="2_GoodValidation.txt" />

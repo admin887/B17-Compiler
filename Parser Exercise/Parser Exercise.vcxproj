@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="Garage.h" />
+    <ClInclude Include="Table.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Token.h" />
   </ItemGroup>
