@@ -1,4 +1,5 @@
 #include "Parser.h"
+#include "Table.h"
 #include<stdio.h>
 extern int yylineno;
 
