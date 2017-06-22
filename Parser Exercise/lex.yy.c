@@ -506,6 +506,7 @@ char *yytext;
 #include "Garage.h"
 #include "Token.h"
 #include "Parser.h"
+#include "Table.h"
 #line 510 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
@@ -1927,12 +1928,14 @@ void main(int argc, char* argv[])
 //	freopen("C:\\temp\\test1_303973465_syntactic.txt", "w", stdout);
 	printf("\t\tAnalyzing input text for defined tokens: \n\n");
 
-	printf("Press any key to load first file");
-	scanf("%d", &a);
-
+	printf("loading file.....");
+	//scanf("%d", &a);
+	 
 	yyin=fopen("C:\\temp\\test1.txt","r");
 	
+	create_table();
 	parsePROGRAM();
+	//pop_CurrentTable();
 	
 	printf("Type any number to exit:");
 	scanf("%d",&a);

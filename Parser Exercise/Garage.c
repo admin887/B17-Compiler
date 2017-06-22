@@ -122,7 +122,8 @@ void create_and_store_token(int typeOfToken, int numberOfLine, char * tokenLexem
 
 			arrayOfTokens[arrayIndex].tokenType = typeOfToken;
 			arrayOfTokens[arrayIndex].lineNumber = numberOfLine;
-			arrayOfTokens[arrayIndex].lexema = getTokenName(typeOfToken);
+			//arrayOfTokens[arrayIndex].lexema = getTokenName(typeOfToken);
+			arrayOfTokens[arrayIndex].lexema = tokenLexeme;
 
 		
 }

@@ -6,7 +6,7 @@ extern int yylineno;
 #define PARSE_LENGH 5
 
 typedef struct _node
-{ 
+{
 	char * FunctionString;
 	struct _node * Next;
 	struct _node * Prev;
@@ -16,7 +16,7 @@ tNode tNodeAnchor = { 0 };
 tNode * tNodeHead = &tNodeAnchor;
 tNode * tNodeTail = &tNodeAnchor;
 
-void Match(int tokenType)
+char* Match(int tokenType)
 {
 	token curToken = Next_Token();
 
@@ -27,7 +27,7 @@ void Match(int tokenType)
 
 	if (curToken.tokenType == tokenType)
 	{
-		return;
+		return curToken.lexema;
 	}
 	errorPrint(curToken, getTokenName(tokenType));
 }
@@ -76,10 +76,10 @@ void parseTASK_DEFINITIONS()
 {
 	startParsing(__FUNCTION__);
 	parseTASK_DEFINITION();
-	parseTASK_DEFINITIONS_TAG( );
+	parseTASK_DEFINITIONS_TAG();
 	endParsing(__FUNCTION__);
 }
-void parseTASK_DEFINITIONS_TAG()	
+void parseTASK_DEFINITIONS_TAG()
 {
 	token tokenPointer = Next_Token();
 
@@ -111,14 +111,16 @@ void parseTASK_DEFINITION()
 	Match(INDETIFIER);
 	Match(KEYWORD_BEGIN);
 	parseDECLARATIONS();
+	create_table();
 	Match(BRACKETS_OPEN_S);
 	parseCOMMANDS();
 	Match(BRACKETS_CLOSE_S);
+	pop_CurrentTable();
 	Match(KEYWORD_END);
 	endParsing(__FUNCTION__);
 
 }
-void parseDECLARATIONS() 
+void parseDECLARATIONS()
 {
 	parseDECLARATION();
 	parseDECLARATIONS_TAG();
@@ -137,23 +139,48 @@ void parseDECLARATIONS_TAG()
 	}
 	endParsing(__FUNCTION__);
 }
-void parseDECLARATION() 
+void parseDECLARATION()
 {
 	int SIZE_OF_ARRAY = 3;
+	char* IDlexema;
+	int IDType;
+	table_entry tableRow;
+
 	int arrayOfFollowsTokens[] = { SEP_SIGN_SEMICOLON, BRACKETS_OPEN_S, BRACKETS_CLOSE_R };
 
 	token tokenPointer = Next_Token();
 	startParsing(__FUNCTION__);
 
+	
 	switch (tokenPointer.tokenType)
 	{
-	case NUMBER_INT:
-	case NUMBER_REAL:
-		Match(INDETIFIER);
-		break;
-	default:
-		errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
+		case KEYWORD_INTEGER:
+		{
+			IDType = 0;		//synthesized
+			break;
+		}
+		case KEYWORD_REAL:
+		{
+			IDType = 1;		//synthesized
+			break;
+		}
+		default:
+			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
 	}
+
+
+	IDlexema = Match(INDETIFIER);
+	tableRow = add(IDlexema);
+
+	if(tableRow == NULL)
+	{
+		errorScope(tokenPointer);
+	}
+	else
+	{
+		set_type(tableRow, IDType);		//inherited
+	}
+
 	endParsing(__FUNCTION__);
 }
 void parseTASK_LIST()
@@ -176,11 +203,11 @@ void parseTASK_LIST_TAG()
 		break;
 	default:
 		Back_Token();
-		
+
 	}
 	endParsing(__FUNCTION__);
 }
-void parseCOMMANDS() 
+void parseCOMMANDS()
 {
 	startParsing(__FUNCTION__);
 	parseCOMMAND();
@@ -249,7 +276,7 @@ void parseCOMMAND()
 	}
 	endParsing(__FUNCTION__);
 }
-void parsePARAM_LIST() 
+void parsePARAM_LIST()
 {
 	startParsing(__FUNCTION__);
 	parseEXPRESSION();
@@ -312,7 +339,7 @@ void parseEXPRESSION_TAG()
 	endParsing(__FUNCTION__);
 
 }
-void parseCONDITION() 
+void parseCONDITION()
 {
 	startParsing(__FUNCTION__);
 	Match(BRACKETS_OPEN_R);
@@ -326,6 +353,11 @@ void parseCONDITION()
 void errorPrint(token ptrToken, char* expectedTokenName)
 {
 	printf("SyntaxError: Unexpected token on line %d, illegal %s expected token %s\n", ptrToken.lineNumber, ptrToken.lexema, expectedTokenName);
+
+}
+void errorScope(token ptrToken)
+{
+	printf("ScopeError: In line: %d, %s is already defined", ptrToken.lineNumber, ptrToken.lexema);
 
 }
 void errorRecover(int * arrayOfFollowsTokens, int typesArrayCount)
@@ -354,10 +386,10 @@ void errorRecover(int * arrayOfFollowsTokens, int typesArrayCount)
 int typeOfTokensContains(int * arrayOfFollowsTokens, int typesArrayCount, int matchToken)
 {
 	int i;
-	for (i = 0; i<typesArrayCount; i++)
+	for (i = 0; i < typesArrayCount; i++)
 	{
 		if (arrayOfFollowsTokens[i] == matchToken)
 			return 1;
 	}
 	return 0;
-}	
+}

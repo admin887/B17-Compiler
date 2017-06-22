@@ -7,6 +7,8 @@
 
 typedef struct tableEntry
 {
+	// 0 - int
+	// 1 - real
 	int IDType;
 	char* IDName;
 	struct tableEntry* next;
@@ -22,6 +24,7 @@ typedef struct Table
 
 void create_table();
 table_ptr* pop_table(table_ptr* cur_tab);
+table_ptr* pop_CurrentTable();
 table_entry add(char* id_name);
 table_entry lookfor(table_ptr* cur_tab, char* id_name);
 table_entry find(char* id_name);

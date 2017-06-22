@@ -1,6 +1,6 @@
 #include "Garage.h"
 #include "DoublyLinkedList.h"
-void Match(int);
+char* Match(int);
 void startParsing(char * name);
 void endParsing(char * name);
 //void parserErrorPrint(token *ptToken,char* expectedToken);
@@ -25,6 +25,8 @@ void parsePARAM_LIST();
 void parsePARAM_LIST_TAG();
 
 void errorPrint(token, int);
+void errorScope(token);
+
 void errorRecover(int *, int);
 char * getTokenName(int tokenType);
 int typeOfTokensContains(int *, int, int);

@@ -21,6 +21,11 @@ table_ptr* pop_table(table_ptr* cur_tab)
 	table_ptr* fatherTable = cur_tab->fatherTable;
 	return fatherTable;
 }
+table_ptr* pop_CurrentTable()
+{
+	table_ptr* fatherTable = current_table->fatherTable;
+	return fatherTable;
+}
 
 table_entry add(char* id_name)
 {
@@ -125,7 +130,7 @@ int crypto(char *ptr)
 
 	while (ptr[i] != '\0')
 	{
-		c = ptr[i] + (c * 87);
+		c = ptr[i] + (c * 11);
 		i++;
 	}
 	return c%HASHSIZE;
