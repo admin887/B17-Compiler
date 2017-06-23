@@ -49,6 +49,7 @@ table_entry add(char* id_name)
 
 table_entry lookfor(table_ptr* cur_tab, char* id_name)
 {
+	
 	unsigned int cryptoID = crypto(id_name);
 	table_entry cur_entry = cur_tab->symbolTable[cryptoID];
 	while (cur_entry != NULL)

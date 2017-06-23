@@ -4,6 +4,7 @@
 extern int yylineno;
 
 #define PARSE_LENGH 5
+#define STOP_ON_ERROR 1
 
 typedef struct _node
 {
@@ -166,6 +167,7 @@ void parseDECLARATION()
 		}
 		default:
 			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
+
 	}
 
 
@@ -233,6 +235,7 @@ void parseCOMMANDS_TAG()
 }
 void parseCOMMAND()
 {
+	table_entry idEntiry;
 	token tokenPointer = Next_Token();
 	int SIZE_OF_ARRAY = 3;
 	int arrayOfFollowsTokens[] = { SEP_SIGN_SEMICOLON, BRACKETS_CLOSE_S, KEYWORD_UNTIL };
@@ -241,8 +244,18 @@ void parseCOMMAND()
 	switch (tokenPointer.tokenType)
 	{
 	case INDETIFIER:
-		Match(EQ_SIGN);
-		parseEXPRESSION();
+		idEntiry = find(tokenPointer.lexema);
+
+		if (idEntiry == NULL)
+		{
+			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
+			return;
+		}
+		else
+		{
+			Match(EQ_SIGN);
+			parseEXPRESSION(idEntiry->IDType);
+		}
 		break;
 	case KEYWORD_DO:
 		parseCOMMANDS();
@@ -253,7 +266,7 @@ void parseCOMMAND()
 	case KEYWORD_SEND:
 		Match(INDETIFIER);		//task_id
 		Match(POINT_SIGN);		//.
-		Match(INDETIFIER);		//signal_id
+		Match(INDETIFIER);		//signal_id  //gTODO add signal name for checking accept
 		Match(BRACKETS_OPEN_R);
 		parsePARAM_LIST();
 		Match(BRACKETS_CLOSE_R);
@@ -279,8 +292,8 @@ void parseCOMMAND()
 void parsePARAM_LIST()
 {
 	startParsing(__FUNCTION__);
-	parseEXPRESSION();
-	parseEXPRESSION_TAG();
+	parseEXPRESSION(-1);
+	parseEXPRESSION_TAG(-1);
 	endParsing(__FUNCTION__);
 }
 void parsePARAM_LIST_TAG()
@@ -299,7 +312,7 @@ void parsePARAM_LIST_TAG()
 	}
 	endParsing(__FUNCTION__);
 }
-void parseEXPRESSION()
+void parseEXPRESSION(int idType)
 {
 	token tokenPointer = Next_Token();
 	int SIZE_OF_ARRAY = 5;
@@ -314,7 +327,18 @@ void parseEXPRESSION()
 	case NUMBER_REAL:
 		break;
 	case INDETIFIER:
-		parseEXPRESSION_TAG();
+		if (idType == -1)
+		{
+			idType = find(tokenPointer.lexema)->IDType;
+		}
+		else
+		{
+			if (ValidateTypes(idType, find(tokenPointer.lexema)->IDType) == -1)
+			{
+				printf("Error type"); //gTODO fix line writing with all parameters
+			}
+		}
+		parseEXPRESSION_TAG(idType);
 		break;
 	default:
 		errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
@@ -322,7 +346,7 @@ void parseEXPRESSION()
 	}
 	endParsing(__FUNCTION__);
 }
-void parseEXPRESSION_TAG()
+void parseEXPRESSION_TAG(int idType)
 {
 	token tokenPointer = Next_Token();
 
@@ -330,7 +354,7 @@ void parseEXPRESSION_TAG()
 	switch (tokenPointer.tokenType)
 	{
 	case ARITHMETIC_OPERATION:
-		parseEXPRESSION();
+		parseEXPRESSION(idType);
 		break;
 	default:
 		Back_Token();
@@ -352,13 +376,21 @@ void parseCONDITION()
 
 void errorPrint(token ptrToken, char* expectedTokenName)
 {
+	int a;
 	printf("SyntaxError: Unexpected token on line %d, illegal %s expected token %s\n", ptrToken.lineNumber, ptrToken.lexema, expectedTokenName);
-
+	if (STOP_ON_ERROR == 1)
+	{
+		scanf("%d", &a);
+	}
 }
 void errorScope(token ptrToken)
 {
+	int a;
 	printf("ScopeError: In line: %d, %s is already defined", ptrToken.lineNumber, ptrToken.lexema);
-
+	if (STOP_ON_ERROR == 1)
+	{
+		scanf("%d", &a);
+	}
 }
 void errorRecover(int * arrayOfFollowsTokens, int typesArrayCount)
 {
@@ -392,4 +424,28 @@ int typeOfTokensContains(int * arrayOfFollowsTokens, int typesArrayCount, int ma
 			return 1;
 	}
 	return 0;
+}
+
+int ValidateTypes(int lType, int rType)
+{
+	//if (lType == NULL || rType == NULL)
+	//{
+	//	// gTODO add better error message
+	//	printf("error");
+	//	return -1;
+	//}
+
+	if (lType == 0 && rType == 1)
+	{
+		// gTODO add better error message
+		printf("error");
+		return -1;
+	}
+	if (lType != rType)
+	{
+		// gTODO add better error message
+		printf("error");
+		return -1;
+	}
+	return -1; //good
 }
