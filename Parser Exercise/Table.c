@@ -126,18 +126,20 @@ void setEntry(table_ptr* cur_tab, table_entry i_Entry, char* id_name)
 
 int crypto(char *ptr)
 {
-	int c=0,i=0;
+	long c=0,i=0;
+	
 	if (ptr == NULL)
 	{
 		return -1;
 	}
-
-
-
+	
+	
+	
 	while (ptr[i] != '\0')
 	{
-		c = ptr[i] + (c * 11);
+		c = ptr[i] + (c *11);
 		i++;
 	}
 	return c%HASHSIZE;
+
 }

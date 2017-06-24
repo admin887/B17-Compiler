@@ -9,6 +9,7 @@ typedef struct tableEntry
 {
 	// 0 - int
 	// 1 - real
+	// 2 - task
 	int IDType;
 	char* IDName;
 	struct tableEntry* next;

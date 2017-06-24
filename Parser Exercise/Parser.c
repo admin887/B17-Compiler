@@ -67,12 +67,15 @@ void endParsing(char * name)
 void parsePROGRAM()
 {
 	startParsing(__FUNCTION__);
+	create_table();
 	parseTASK_DEFINITIONS();
 	//Match(SEP_SIGN_SEMICOLON);
 	Match(KEYWORD_PARBEGIN);
 	parseTASK_LIST();
 	Match(KEYWORD_PAREND);
 	Match(ENDOFILE);
+	pop_CurrentTable();
+
 	endParsing(__FUNCTION__);
 	printf("%d errors found\n", errorCounter);
 }
@@ -111,9 +114,18 @@ void parseTASK_DEFINITIONS_TAG()
 }
 void parseTASK_DEFINITION()
 {
+	char* taskIDLexema;
+	table_entry taskEntry;
 	startParsing(__FUNCTION__);
 	Match(KEYWORD_TASK);
-	Match(INDETIFIER);
+	taskIDLexema = Match(INDETIFIER);
+
+	if (taskIDLexema != NULL)
+	{
+		taskEntry = add(taskIDLexema);
+		set_type(taskEntry, 2);
+	}
+
 	Match(KEYWORD_BEGIN);
 	parseDECLARATIONS();
 	create_table();
@@ -192,8 +204,23 @@ void parseDECLARATION()
 }
 void parseTASK_LIST()
 {
+	char* taskNameInLine;
+	table_entry taskNameFromTable;
+	token bt;
+	token nt;
+
 	startParsing(__FUNCTION__);
-	Match(INDETIFIER);
+	taskNameInLine = Match(INDETIFIER);
+
+	taskNameFromTable = find(taskNameInLine);
+
+	if (taskNameFromTable == NULL)
+	{
+		bt= Back_Token();
+		nt = Next_Token();
+		PrintError("", nt, "is Not found\n");
+	}
+
 	parseTASK_LIST_TAG();
 	endParsing(__FUNCTION__);
 
@@ -205,8 +232,9 @@ void parseTASK_LIST_TAG()
 	switch (tokenPointer.tokenType)
 	{
 	case SEP_SIGN_DOUBLE_LINES:
-		Match(INDETIFIER);
-		parseTASK_LIST_TAG();
+		//Match(INDETIFIER);
+		parseTASK_LIST();
+		//parseTASK_LIST_TAG();
 		break;
 	default:
 		Back_Token();
