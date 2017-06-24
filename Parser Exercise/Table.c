@@ -137,7 +137,7 @@ int crypto(char *ptr)
 	
 	while (ptr[i] != '\0')
 	{
-		c = ptr[i] + (c *11);
+		c = ptr[i] + (c);
 		i++;
 	}
 	return c%HASHSIZE;
