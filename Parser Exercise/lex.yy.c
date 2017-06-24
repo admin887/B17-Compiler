@@ -773,7 +773,7 @@ case 3:
 YY_RULE_SETUP
 #line 82 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_PARBEGIN),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_PARBEGIN),yytext, yylineno);
 				create_and_store_token(KEYWORD_PARBEGIN, yylineno, yytext);
 				return 1;
 			}
@@ -782,7 +782,7 @@ case 4:
 YY_RULE_SETUP
 #line 87 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_PAREND),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_PAREND),yytext, yylineno);
 				create_and_store_token(KEYWORD_PAREND, yylineno, yytext);
 				return 1;
 			}
@@ -791,7 +791,7 @@ case 5:
 YY_RULE_SETUP
 #line 92 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_TASK),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_TASK),yytext, yylineno);
 				create_and_store_token(KEYWORD_TASK, yylineno, yytext);
 				return 1;
 			}
@@ -800,7 +800,7 @@ case 6:
 YY_RULE_SETUP
 #line 97 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_BEGIN),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_BEGIN),yytext, yylineno);
 				create_and_store_token(KEYWORD_BEGIN, yylineno, yytext);
 				return 1;
 			}
@@ -809,7 +809,7 @@ case 7:
 YY_RULE_SETUP
 #line 102 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_END),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_END),yytext, yylineno);
 				create_and_store_token(KEYWORD_END, yylineno, yytext);
 				return 1;
 			}
@@ -818,7 +818,7 @@ case 8:
 YY_RULE_SETUP
 #line 107 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_INTEGER),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_INTEGER),yytext, yylineno);
 				create_and_store_token(KEYWORD_INTEGER, yylineno, yytext);
 				return 1;
 			}
@@ -827,7 +827,7 @@ case 9:
 YY_RULE_SETUP
 #line 112 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_REAL),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_REAL),yytext, yylineno);
 				create_and_store_token(KEYWORD_REAL, yylineno, yytext);
 				return 1;
 			}
@@ -836,7 +836,7 @@ case 10:
 YY_RULE_SETUP
 #line 117 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_DO),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_DO),yytext, yylineno);
 				create_and_store_token(KEYWORD_DO, yylineno, yytext);
 				return 1;
 			}
@@ -845,7 +845,7 @@ case 11:
 YY_RULE_SETUP
 #line 122 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_UNTIL),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_UNTIL),yytext, yylineno);
 				create_and_store_token(KEYWORD_UNTIL, yylineno, yytext);
 				return 1;
 			}
@@ -854,7 +854,7 @@ case 12:
 YY_RULE_SETUP
 #line 127 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_OD),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_OD),yytext, yylineno);
 				create_and_store_token(KEYWORD_OD, yylineno, yytext);
 				return 1;
 			}
@@ -863,7 +863,7 @@ case 13:
 YY_RULE_SETUP
 #line 132 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_SEND),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_SEND),yytext, yylineno);
 				create_and_store_token(KEYWORD_SEND, yylineno, yytext);
 				return 1;
 			}
@@ -872,7 +872,7 @@ case 14:
 YY_RULE_SETUP
 #line 137 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_ACCEPT),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(KEYWORD_ACCEPT),yytext, yylineno);
 				create_and_store_token(KEYWORD_ACCEPT, yylineno, yytext);
 				return 1;
 			}
@@ -990,7 +990,7 @@ case 27:
 YY_RULE_SETUP
 #line 208 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(NUMBER_INT),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(NUMBER_INT),yytext, yylineno);
 				create_and_store_token(NUMBER_INT, yylineno, yytext);
 				return 1;
 			}
@@ -999,7 +999,7 @@ case 28:
 YY_RULE_SETUP
 #line 213 "LexicalAnalysis.lex"
 {
-				printf("Token Type: %s: \t\tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(NUMBER_REAL),yytext, yylineno);
+				printf("Token Type: %s: \tToken Lexeme: \"%s\" Token Line Number: %d \n",getTokenName(NUMBER_REAL),yytext, yylineno);
 				create_and_store_token(NUMBER_REAL, yylineno, yytext);
 				return 1;
 			}
@@ -1017,7 +1017,7 @@ YY_RULE_SETUP
 #line 226 "LexicalAnalysis.lex"
 {
 				int a;
-				printf("BAD Token!!!!!!! \t\t\tToken: \"%s\" Number line: %d\n",yytext, yylineno);
+				printf("BAD Token!!!!!!! \t\tToken: \"%s\" Number line: %d\n",yytext, yylineno);
 			}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -1923,19 +1923,27 @@ int yywrap(void){return 1;}
 
 void main(int argc, char* argv[])
 {	
-	token currentToken;
-//	freopen("C:\\temp\\test1_303973465_syntactic.txt", "w", stdout);
-	printf("\t\tAnalyzing input text for defined tokens: \n\n");
 
+	// file 1 symantic
+	token currentToken;
+	printf("file save to C:\\temp\\output_303973465.txt");
+
+	freopen("C:\\temp\\test1_303973465_aaaaa.txt", "w", stdout);
+	printf("\tAnalyzing input text for defined tokens: \n\n");
 	printf("loading file.....");
-	//scanf("%d", &a);
-	 
-	yyin=fopen("C:\\temp\\symantic_good.txt","r");
+	yyin=fopen("C:\\temp\\test1.txt","r");
 	
 	create_table();
 	parsePROGRAM();
-	//pop_CurrentTable();
-	
-	printf("Type any number to exit:");
-	getchar();
+	pop_CurrentTable();
+
+
+	// file 2 symantic
+	printf("\tAnalyzing input text for defined tokens: \n\n");
+	printf("loading file.....");
+	yyin = fopen("C:\\temp\\test2.txt", "r");
+	yylineno = 1;
+	create_table();
+	parsePROGRAM();
+	pop_CurrentTable();
 }

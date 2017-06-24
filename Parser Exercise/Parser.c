@@ -5,6 +5,7 @@ extern int yylineno;
 
 #define PARSE_LENGH 5
 #define STOP_ON_ERROR 0
+#define SHOW_TREE 0
 
 typedef struct _node
 {
@@ -36,9 +37,12 @@ char* Match(int tokenType)
 }
 void startParsing(char * FuncName)
 {
-	int i = 0;
 	int tabsCounter = 0;
+	int i = 0;
 	tNode * Item = (tNode *)NULL;
+
+	if (SHOW_TREE == 0)
+		return;
 
 	tNodeTail->Next = (tNode *)malloc(sizeof(tNode));
 	tNodeTail->Next->Prev = tNodeTail;
@@ -62,6 +66,8 @@ void startParsing(char * FuncName)
 }
 void endParsing(char * name)
 {
+	if (SHOW_TREE == 0)
+		return;
 	printf("%s function end parsing\n", name + PARSE_LENGH);
 }
 void parsePROGRAM()
@@ -385,6 +391,8 @@ void parseCOMMANDS_TAG()
 }
 void parseCOMMAND()
 {
+	table_entry entityTask;
+	char* lexemaTaskType;
 	char* lexemaTaskid;
 	char* lexemaSignalid;
 	table_entry idEntiry;
@@ -401,14 +409,19 @@ void parseCOMMAND()
 
 		if (idEntiry == NULL)
 		{
-		
+			
 			PrintError("Scope", tokenPointer, "undeclared identifier");
 			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
 			return;
 		}
 		else
 		{
+			if (idEntiry->IDType == 2)
+			{
+				PrintError("", tokenPointer, "Task id cannot be set in left side of assignments");
+			}
 			Match(EQ_SIGN);
+			
 			parseEXPRESSION(idEntiry->IDType);
 		}
 		break;
@@ -511,6 +524,10 @@ void parseEXPRESSION(int idType)
 			}
 			else
 			{
+				if (entry->IDType == 2) //Task type
+				{
+					PrintError("", tokenPointer, "Task cannot be set in expression");
+				}
 				idType = find(tokenPointer.lexema)->IDType;
 			}
 		}
@@ -575,7 +592,7 @@ void errorPrint(token ptrToken, char* expectedTokenName)
 
 void PrintError(char* errorHeader, token ptrToken, char * message)
 {
-	printf("%s Error: In line: %d; Lexema: %s; %s", errorHeader, ptrToken.lineNumber, ptrToken.lexema, message);
+	printf("%s Error: In line: %d; Lexema: %s; %s\n", errorHeader, ptrToken.lineNumber, ptrToken.lexema, message);
 	errorCounter++;
 	if (STOP_ON_ERROR == 1)
 	{
