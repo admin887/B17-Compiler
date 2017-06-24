@@ -28,6 +28,7 @@
     <None Include="LexicalAnalysis.lex">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="symantic_good.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Resource Files">

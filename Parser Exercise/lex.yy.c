@@ -1024,7 +1024,7 @@ case YY_STATE_EOF(INITIAL):
 #line 232 "LexicalAnalysis.lex"
 {
 				printf("END OF FILE\n\n");
-				create_and_store_token(EOF, yylineno, yytext);
+				create_and_store_token(ENDOFILE, yylineno, yytext);
 				return 1;
 			}
 	YY_BREAK
@@ -1931,7 +1931,7 @@ void main(int argc, char* argv[])
 	printf("loading file.....");
 	//scanf("%d", &a);
 	 
-	yyin=fopen("C:\\temp\\test1.txt","r");
+	yyin=fopen("C:\\temp\\symantic_good.txt","r");
 	
 	create_table();
 	parsePROGRAM();

@@ -25,7 +25,7 @@ void parsePARAM_LIST();
 void parsePARAM_LIST_TAG();
 
 void errorPrint(token, int);
-void errorScope(token);
+void PrintError(char*, token, char *);
 
 void errorRecover(int *, int);
 char * getTokenName(int tokenType);

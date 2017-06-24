@@ -98,6 +98,7 @@
     <None Include="LEX_BadValidation2.txt" />
     <None Include="LEX_GoodValidation1.txt" />
     <None Include="LEX_GoodValidation2.txt" />
+    <None Include="symantic_good.txt" />
     <None Include="test2_bad.txt" />
     <None Include="test2_good.txt" />
   </ItemGroup>

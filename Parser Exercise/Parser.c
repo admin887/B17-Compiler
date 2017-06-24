@@ -66,7 +66,7 @@ void parsePROGRAM()
 {
 	startParsing(__FUNCTION__);
 	parseTASK_DEFINITIONS();
-	Match(SEP_SIGN_SEMICOLON);
+	//Match(SEP_SIGN_SEMICOLON);
 	Match(KEYWORD_PARBEGIN);
 	parseTASK_LIST();
 	Match(KEYWORD_PAREND);
@@ -91,6 +91,7 @@ void parseTASK_DEFINITIONS_TAG()
 		tokenPointer = Next_Token();
 		if (tokenPointer.tokenType == KEYWORD_PARBEGIN)
 		{
+			Back_Token();
 			return;
 		}
 		else
@@ -176,7 +177,8 @@ void parseDECLARATION()
 
 	if(tableRow == NULL)
 	{
-		errorScope(tokenPointer);
+		//errorScope(tokenPointer, );
+		PrintError("Scope", tokenPointer, "Lexema already defined");
 	}
 	else
 	{
@@ -248,6 +250,8 @@ void parseCOMMAND()
 
 		if (idEntiry == NULL)
 		{
+		
+			PrintError("Scope", tokenPointer, "Multi declaration detected");
 			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
 			return;
 		}
@@ -293,7 +297,8 @@ void parsePARAM_LIST()
 {
 	startParsing(__FUNCTION__);
 	parseEXPRESSION(-1);
-	parseEXPRESSION_TAG(-1);
+	//parseEXPRESSION_TAG(-1);
+	parsePARAM_LIST_TAG();
 	endParsing(__FUNCTION__);
 }
 void parsePARAM_LIST_TAG()
@@ -333,9 +338,14 @@ void parseEXPRESSION(int idType)
 		}
 		else
 		{
-			if (ValidateTypes(idType, find(tokenPointer.lexema)->IDType) == -1)
+			table_entry entiry = find(tokenPointer.lexema);
+
+			if (entiry != NULL)
 			{
-				printf("Error type"); //gTODO fix line writing with all parameters
+				if (ValidateTypes(idType, entiry->IDType) == -1)
+				{
+
+				}
 			}
 		}
 		parseEXPRESSION_TAG(idType);
@@ -383,10 +393,11 @@ void errorPrint(token ptrToken, char* expectedTokenName)
 		scanf("%d", &a);
 	}
 }
-void errorScope(token ptrToken)
+
+void PrintError(char* errorHeader, token ptrToken, char * message)
 {
 	int a;
-	printf("ScopeError: In line: %d, %s is already defined", ptrToken.lineNumber, ptrToken.lexema);
+	printf("%s Error: In line: %d; Lexema: %s; %s", errorHeader, ptrToken.lineNumber, ptrToken.lexema, message);
 	if (STOP_ON_ERROR == 1)
 	{
 		scanf("%d", &a);
@@ -428,24 +439,17 @@ int typeOfTokensContains(int * arrayOfFollowsTokens, int typesArrayCount, int ma
 
 int ValidateTypes(int lType, int rType)
 {
-	//if (lType == NULL || rType == NULL)
-	//{
-	//	// gTODO add better error message
-	//	printf("error");
-	//	return -1;
-	//}
-
 	if (lType == 0 && rType == 1)
 	{
 		// gTODO add better error message
-		printf("error");
+		//printf("error");
 		return -1;
 	}
 	if (lType != rType)
 	{
 		// gTODO add better error message
-		printf("error");
+		//printf("error");
 		return -1;
 	}
-	return -1; //good
+	return 1; //good
 }

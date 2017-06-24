@@ -1,0 +1,51 @@
+
+task project1 begin
+	real value1; 
+	integer value2;
+	integer i; 
+	integer value3;
+	integer value3
+	{
+		do
+			value1 = 4.4
+			value2 = value1 + 1;
+			value2 = value2 + 3.4;
+			value5 = 5;
+			i = 3.2;
+		until (value1 == value2) od
+	}
+end;
+
+
+task project2 begin
+	real value1;
+	real value10;
+	integer value3
+	{
+		send project3.signal1(value1);
+		send project3.signal1(value2);
+		send project3.signal2(value3);
+		send project3.signal1(value3, value10);
+		send project4444.signal1(value1);
+		accept signal15(integer result)
+	}
+end;
+
+
+task project3 begin
+	real value1;
+	real value10;
+	integer value3
+	{
+		send project2.signal15(value1);
+		send project2.signal15(value2);
+		send project2.signal25(value3);
+		send project2.signal15(value3, value10);
+		send project4444.signal1(value1);
+		accept signal1(integer result)
+	}
+end;
+
+parbegin
+	project2 || project3 || project1
+parend
