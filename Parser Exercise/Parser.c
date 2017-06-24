@@ -4,7 +4,7 @@
 extern int yylineno;
 
 #define PARSE_LENGH 5
-#define STOP_ON_ERROR 1
+#define STOP_ON_ERROR 0
 
 typedef struct _node
 {
@@ -16,6 +16,8 @@ typedef struct _node
 tNode tNodeAnchor = { 0 };
 tNode * tNodeHead = &tNodeAnchor;
 tNode * tNodeTail = &tNodeAnchor;
+
+int errorCounter = 0;
 
 char* Match(int tokenType)
 {
@@ -72,6 +74,7 @@ void parsePROGRAM()
 	Match(KEYWORD_PAREND);
 	Match(ENDOFILE);
 	endParsing(__FUNCTION__);
+	printf("%d errors found\n", errorCounter);
 }
 void parseTASK_DEFINITIONS()
 {
@@ -251,7 +254,7 @@ void parseCOMMAND()
 		if (idEntiry == NULL)
 		{
 		
-			PrintError("Scope", tokenPointer, "Multi declaration detected");
+			PrintError("Scope", tokenPointer, "undeclared identifier");
 			errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);
 			return;
 		}
@@ -386,21 +389,22 @@ void parseCONDITION()
 
 void errorPrint(token ptrToken, char* expectedTokenName)
 {
-	int a;
 	printf("SyntaxError: Unexpected token on line %d, illegal %s expected token %s\n", ptrToken.lineNumber, ptrToken.lexema, expectedTokenName);
+	errorCounter++;
 	if (STOP_ON_ERROR == 1)
 	{
-		scanf("%d", &a);
+		
+		getchar();
 	}
 }
 
 void PrintError(char* errorHeader, token ptrToken, char * message)
 {
-	int a;
 	printf("%s Error: In line: %d; Lexema: %s; %s", errorHeader, ptrToken.lineNumber, ptrToken.lexema, message);
+	errorCounter++;
 	if (STOP_ON_ERROR == 1)
 	{
-		scanf("%d", &a);
+		getchar();
 	}
 }
 void errorRecover(int * arrayOfFollowsTokens, int typesArrayCount)

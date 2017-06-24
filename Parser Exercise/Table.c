@@ -80,8 +80,6 @@ table_entry find(char* id_name)
 			tab = pop_table(tab);
 		}
 	}
-
-	printf("ERROR: undeclared identifier %s \n", id_name);
 	return NULL;
 }
 

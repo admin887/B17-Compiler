@@ -1923,7 +1923,6 @@ int yywrap(void){return 1;}
 
 void main(int argc, char* argv[])
 {	
-	int a;
 	token currentToken;
 //	freopen("C:\\temp\\test1_303973465_syntactic.txt", "w", stdout);
 	printf("\t\tAnalyzing input text for defined tokens: \n\n");
@@ -1938,5 +1937,5 @@ void main(int argc, char* argv[])
 	//pop_CurrentTable();
 	
 	printf("Type any number to exit:");
-	scanf("%d",&a);
+	getchar();
 }
