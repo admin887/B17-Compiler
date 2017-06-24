@@ -66,18 +66,123 @@ void endParsing(char * name)
 }
 void parsePROGRAM()
 {
+	char* signalTaskName;
+	int i, j,k;
+	char* subbuff;
+	int found = 0;
 	startParsing(__FUNCTION__);
 	create_table();
+	create_SignalTable();
 	parseTASK_DEFINITIONS();
 	//Match(SEP_SIGN_SEMICOLON);
 	Match(KEYWORD_PARBEGIN);
 	parseTASK_LIST();
 	Match(KEYWORD_PAREND);
 	Match(ENDOFILE);
-	pop_CurrentTable();
+	
 
 	endParsing(__FUNCTION__);
+
+	printf("Validating task defenition in Signals.....\n", errorCounter);
+	
+	
+	for (j = 0; j < HASHSIZE && found == 0; j++)
+	{
+		if (create_SignalTable()->symbolTable[j] == NULL)
+		{
+			continue;
+		}
+
+		for (i = 0; i < HASHSIZE; i++)
+		{
+			if (getCurrentTable()->symbolTable[i] == NULL)
+				continue;
+
+			if (getCurrentTable()->symbolTable[i]->IDType == 2)
+			{
+				signalTaskName = (create_SignalTable()->symbolTable[j]->IDType);
+				k = 0;
+				while (signalTaskName[k] != '.')
+				{
+					k++;
+				}
+
+				subbuff = (char *)malloc(sizeof(char)*k);
+
+				memcpy(subbuff, &signalTaskName[0], k);
+				subbuff[k] = '\0';
+
+
+				if (!strcmp(subbuff, getCurrentTable()->symbolTable[i]->IDName))
+				{
+					found = 1;
+					break;
+				}
+			}
+
+		}
+
+		if (found == 0)
+		{
+			printf("task name %s did not found\n", subbuff);
+			errorCounter++;
+		}
+		found = 0;
+	}
+	
+		
+	
+
+
+	//for (i = 0; i < HASHSIZE; i++)
+	//{
+	//	if (getCurrentTable()->symbolTable[i] == NULL)
+	//		continue;
+	//
+	//	if (getCurrentTable()->symbolTable[i]->IDType == 2)
+	//	{
+	//
+	//		for (j = 0; j < HASHSIZE && found ==0; j++)
+	//		{
+	//			if (create_SignalTable()->symbolTable[j] == NULL)
+	//			{
+	//				continue;
+	//			}
+	//
+	//			signalTaskName = (create_SignalTable()->symbolTable[j]->IDType);
+	//
+	//			k = 0;
+	//			while (signalTaskName[k] != '.')
+	//			{
+	//				k++;
+	//			}
+	//
+	//			subbuff = (char *)malloc(sizeof(char)*k);
+	//
+	//			memcpy(subbuff, &signalTaskName[0], k);
+	//			subbuff[k] = '\0';
+	//
+	//			
+	//			if (!strcmp(subbuff, getCurrentTable()->symbolTable[i]->IDName))
+	//			{
+	//				found = 1;
+	//				break;
+	//			}
+	//		}
+	//		if (found == 0)
+	//		{
+	//			printf("task Number did not found");
+	//			
+	//		}
+	//		found = 0;
+	//	}
+	//
+	//	
+	//}
+
+	pop_CurrentTable();
 	printf("%d errors found\n", errorCounter);
+
 }
 void parseTASK_DEFINITIONS()
 {
@@ -280,7 +385,10 @@ void parseCOMMANDS_TAG()
 }
 void parseCOMMAND()
 {
+	char* lexemaTaskid;
+	char* lexemaSignalid;
 	table_entry idEntiry;
+	table_entry signalEntity;
 	token tokenPointer = Next_Token();
 	int SIZE_OF_ARRAY = 3;
 	int arrayOfFollowsTokens[] = { SEP_SIGN_SEMICOLON, BRACKETS_CLOSE_S, KEYWORD_UNTIL };
@@ -311,9 +419,15 @@ void parseCOMMAND()
 		Match(KEYWORD_OD);
 		break;
 	case KEYWORD_SEND:
-		Match(INDETIFIER);		//task_id
+		lexemaTaskid = Match(INDETIFIER);		//task_id
 		Match(POINT_SIGN);		//.
-		Match(INDETIFIER);		//signal_id  //gTODO add signal name for checking accept
+		lexemaSignalid = Match(INDETIFIER);		//signal_id  //gTODO add signal name for checking accept
+		
+		if (lexemaTaskid != NULL && lexemaSignalid != NULL)
+		{
+			signalEntity = addSignal(lexemaSignalid);
+			set_type(signalEntity, lexemaTaskid);
+		}
 		Match(BRACKETS_OPEN_R);
 		parsePARAM_LIST();
 		Match(BRACKETS_CLOSE_R);

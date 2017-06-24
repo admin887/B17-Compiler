@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
 #define HASHSIZE 101
 
 typedef struct tableEntry
@@ -34,3 +33,8 @@ int get_type(table_entry id_entry);
 void setEntry(table_ptr* cur_tab, table_entry i_Entry, char* id_name);
 char* m_strdup(char *o);
 unsigned int crypto(char *s);
+table_ptr* getCurrentTable();
+
+table_ptr* create_SignalTable();
+table_entry addSignal(char*);
+void setEntrySignal(table_ptr*, table_entry, char*);
