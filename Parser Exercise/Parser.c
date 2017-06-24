@@ -344,7 +344,7 @@ void parseEXPRESSION(int idType)
 			{
 				if (ValidateTypes(idType, entiry->IDType) == -1)
 				{
-
+					PrintError("", tokenPointer, "Types are not matched");
 				}
 			}
 		}
