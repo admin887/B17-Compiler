@@ -44,6 +44,9 @@ void startParsing(char * FuncName)
 	if (SHOW_TREE == 0)
 		return;
 
+	tNodeHead = &tNodeAnchor;
+	tNodeTail = &tNodeAnchor;
+
 	tNodeTail->Next = (tNode *)malloc(sizeof(tNode));
 	tNodeTail->Next->Prev = tNodeTail;
 	tNodeTail->Next->Next = (tNode *)NULL;
@@ -76,9 +79,10 @@ void parsePROGRAM()
 	int i, j,k;
 	char* subbuff;
 	int found = 0;
+	errorCounter = 0;
 	startParsing(__FUNCTION__);
 	create_table();
-	create_SignalTable();
+	create_SignalTable(1);
 	parseTASK_DEFINITIONS();
 	//Match(SEP_SIGN_SEMICOLON);
 	Match(KEYWORD_PARBEGIN);
@@ -94,7 +98,7 @@ void parsePROGRAM()
 	
 	for (j = 0; j < HASHSIZE && found == 0; j++)
 	{
-		if (create_SignalTable()->symbolTable[j] == NULL)
+		if (create_SignalTable(0)->symbolTable[j] == NULL)
 		{
 			continue;
 		}
@@ -106,7 +110,7 @@ void parsePROGRAM()
 
 			if (getCurrentTable()->symbolTable[i]->IDType == 2)
 			{
-				signalTaskName = (create_SignalTable()->symbolTable[j]->IDType);
+				signalTaskName = (create_SignalTable(0)->symbolTable[j]->IDType);
 				k = 0;
 				while (signalTaskName[k] != '.')
 				{
@@ -376,6 +380,8 @@ void parseCOMMANDS_TAG()
 {
 	token tokenPointer = Next_Token();
 
+	int arrayOfFollowsTokens[] = { INDETIFIER };
+
 	startParsing(__FUNCTION__);
 	switch (tokenPointer.tokenType)
 	{
@@ -383,8 +389,18 @@ void parseCOMMANDS_TAG()
 		parseCOMMAND();
 		parseCOMMANDS_TAG();
 		break;
-	default:
+	case INDETIFIER:
+	{
+		PrintError("", tokenPointer, "exptected to get ';'");
 		Back_Token();
+		parseCOMMAND();
+		parseCOMMANDS_TAG();
+		break;
+	}
+	default:
+	{
+		Back_Token();
+	}
 
 	}
 	endParsing(__FUNCTION__);
@@ -457,6 +473,9 @@ void parseCOMMAND()
 		parseCOMMANDS();
 		Match(BRACKETS_CLOSE_S);
 		Match(KEYWORD_END);
+		break;
+	case KEYWORD_UNTIL:
+		Back_Token();
 		break;
 	default:
 		errorRecover(arrayOfFollowsTokens, SIZE_OF_ARRAY);

@@ -1928,7 +1928,7 @@ void main(int argc, char* argv[])
 	token currentToken;
 	printf("file save to C:\\temp\\output_303973465.txt");
 
-	freopen("C:\\temp\\test1_303973465_aaaaa.txt", "w", stdout);
+	freopen("C:\\temp\\output_303973465.txt", "w", stdout);
 	printf("\tAnalyzing input text for defined tokens: \n\n");
 	printf("loading file.....");
 	yyin=fopen("C:\\temp\\test1.txt","r");
@@ -1937,13 +1937,13 @@ void main(int argc, char* argv[])
 	parsePROGRAM();
 	pop_CurrentTable();
 
-
-	// file 2 symantic
-	printf("\tAnalyzing input text for defined tokens: \n\n");
-	printf("loading file.....");
-	yyin = fopen("C:\\temp\\test2.txt", "r");
-	yylineno = 1;
-	create_table();
-	parsePROGRAM();
-	pop_CurrentTable();
+	getchar();
+// file 2 symantic
+printf("\tAnalyzing input text for defined tokens: \n\n");
+printf("loading file.....");
+yyin = fopen("C:\\temp\\test2.txt", "r");
+yylineno = 1;
+create_table();
+parsePROGRAM();
+pop_CurrentTable();
 }

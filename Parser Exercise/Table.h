@@ -35,6 +35,6 @@ char* m_strdup(char *o);
 unsigned int crypto(char *s);
 table_ptr* getCurrentTable();
 
-table_ptr* create_SignalTable();
+table_ptr* create_SignalTable(int);
 table_entry addSignal(char*);
 void setEntrySignal(table_ptr*, table_entry, char*);

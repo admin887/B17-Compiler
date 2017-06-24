@@ -152,13 +152,15 @@ table_ptr* getCurrentTable()
 	return current_table;
 }
 
-table_ptr* create_SignalTable()
+int counter = 0;
+table_ptr* create_SignalTable(int init)
 {
 	int i = 0;
 	table_ptr* new_table;
-	if (tableForSignals == NULL)
+	if (tableForSignals == NULL || init == 1)
 	{
 		int i=0;
+		counter = 0;
 		new_table = (table_ptr*)malloc(1 * sizeof(table_ptr));
 
 		while (i < HASHSIZE)
@@ -196,7 +198,7 @@ table_entry addSignal(char* id_name)
 		return cur_entry;
 }
 
-int counter = 0;
+
 void setEntrySignal(table_ptr* cur_tab, table_entry i_Entry, char* id_name)
 {
 	//unsigned int cryptoID = crypto(id_name);
