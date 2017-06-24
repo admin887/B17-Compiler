@@ -23,8 +23,9 @@ table_ptr* pop_table(table_ptr* cur_tab)
 }
 table_ptr* pop_CurrentTable()
 {
-	table_ptr* fatherTable = current_table->fatherTable;
-	return fatherTable;
+	current_table = current_table->fatherTable;
+	return current_table;
+	//return current_table->fatherTable;
 }
 
 table_entry add(char* id_name)

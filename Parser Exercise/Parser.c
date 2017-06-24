@@ -116,6 +116,7 @@ void parseTASK_DEFINITION()
 {
 	char* taskIDLexema;
 	table_entry taskEntry;
+	token t;
 	startParsing(__FUNCTION__);
 	Match(KEYWORD_TASK);
 	taskIDLexema = Match(INDETIFIER);
@@ -123,10 +124,20 @@ void parseTASK_DEFINITION()
 	if (taskIDLexema != NULL)
 	{
 		taskEntry = add(taskIDLexema);
-		set_type(taskEntry, 2);
+		if (taskEntry == NULL)
+		{
+			t = Back_Token();
+			t = Next_Token();
+			PrintError("", t, "Task allready defined");
+		}
+		else
+		{
+			set_type(taskEntry, 2);
+		}
 	}
 
 	Match(KEYWORD_BEGIN);
+	create_table();
 	parseDECLARATIONS();
 	create_table();
 	Match(BRACKETS_OPEN_S);
@@ -134,6 +145,7 @@ void parseTASK_DEFINITION()
 	Match(BRACKETS_CLOSE_S);
 	pop_CurrentTable();
 	Match(KEYWORD_END);
+	pop_CurrentTable();
 	endParsing(__FUNCTION__);
 
 }
@@ -351,6 +363,8 @@ void parsePARAM_LIST_TAG()
 void parseEXPRESSION(int idType)
 {
 	token tokenPointer = Next_Token();
+	table_entry entry;
+	int typeInLine;
 	int SIZE_OF_ARRAY = 5;
 	int arrayOfFollowsTokens[] = { SEP_SIGN_SEMICOLON, BRACKETS_CLOSE_S,SEP_SIGN_COMMA,BRACKETS_CLOSE_R, KEYWORD_UNTIL };
 
@@ -359,13 +373,32 @@ void parseEXPRESSION(int idType)
 	switch (tokenPointer.tokenType)
 	{
 	case NUMBER_INT:
+		typeInLine = 0;
+		if (ValidateTypes(idType, typeInLine) == -1)
+		{
+			PrintError("", tokenPointer, "types do not matched");
+		}
 		break;
 	case NUMBER_REAL:
+		typeInLine = 1;
+		if (ValidateTypes(idType, typeInLine) == -1)
+		{
+			PrintError("", tokenPointer, "types do not matched");
+		}
 		break;
 	case INDETIFIER:
 		if (idType == -1)
 		{
-			idType = find(tokenPointer.lexema)->IDType;
+			entry = find(tokenPointer.lexema);
+
+			if (entry == NULL)
+			{
+				PrintError("Scope", tokenPointer, "undefine INDETIFIER");
+			}
+			else
+			{
+				idType = find(tokenPointer.lexema)->IDType;
+			}
 		}
 		else
 		{
